@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #0b0d14;
+}
+
+.glass {
+  background: rgba(17, 24, 39, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  backdrop-filter: blur(18px);
+}
+
+.bento-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+@media (min-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+.bento-card {
+  grid-column: span 4;
+}
+
+.bento-card--wide {
+  grid-column: span 8;
+}
+
+.bento-card--tall {
+  grid-row: span 2;
+}
+
+.rich-text h1 {
+  @apply text-3xl font-semibold text-white;
+}
+
+.rich-text h2 {
+  @apply text-2xl font-semibold text-white;
+}
+
+.rich-text p {
+  @apply text-base text-slate-200 leading-relaxed;
+}
+
+.rich-text a {
+  @apply text-neo-blue underline;
+}
+
+.rich-text img {
+  @apply rounded-xl border border-white/10;
+}
