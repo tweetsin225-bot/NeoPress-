@@ -22,7 +22,7 @@ const Home = () => {
   return (
     <main className="mx-auto w-full max-w-6xl px-6 pb-20 pt-10">
       <section className="grid gap-8 lg:grid-cols-[2.2fr_1fr]">
-        <HeroCarousel slides={heroSlides} />
+        <HeroCarousel slides={heroSlidesSource} />
         <div className="flex flex-col gap-6">
           <div className="glass rounded-3xl p-6">
             <p className="text-xs uppercase tracking-[0.4em] text-neo-blue/70">Daily Brief</p>

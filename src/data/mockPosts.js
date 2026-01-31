@@ -48,6 +48,7 @@ export const basePosts = [
     tags: ["RPG", "Guide", "Co-op"],
     author: "Lia Park",
     status: "published",
+    featured: true,
     image:
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
     content:
@@ -63,6 +64,7 @@ export const basePosts = [
     tags: ["Shonen", "Review", "Finale"],
     author: "Mira Santos",
     status: "published",
+    featured: true,
     image:
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
     content:
