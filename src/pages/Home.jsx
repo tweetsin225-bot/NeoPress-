@@ -3,15 +3,14 @@ import HeroCarousel from "../components/HeroCarousel.jsx";
 import AdPlaceholder from "../components/AdPlaceholder.jsx";
 import ArticleCard from "../components/ArticleCard.jsx";
 import { basePosts, heroSlides } from "../data/mockPosts.js";
+import { mergePosts } from "../utils/posts.js";
 import { loadDeletedIds, loadPosts } from "../utils/storage.js";
 
 const Home = () => {
   const posts = useMemo(() => {
     const stored = loadPosts();
     const deleted = loadDeletedIds();
-    const merged = new Map(basePosts.map((post) => [post.id, post]));
-    stored.forEach((post) => merged.set(post.id, post));
-    return Array.from(merged.values()).filter((post) => !deleted.includes(post.id));
+    return mergePosts(basePosts, stored, deleted);
   }, []);
 
   return (

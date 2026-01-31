@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { basePosts } from "../data/mockPosts.js";
 import { supabase } from "../lib/supabaseClient.js";
 import { getAdminSession } from "../utils/auth.js";
+import { mergePosts } from "../utils/posts.js";
 import { loadDeletedIds, loadPosts, saveDeletedIds, savePosts } from "../utils/storage.js";
 
 const formatAction = (command, value = null) => {
@@ -38,13 +39,13 @@ const AdminEditor = () => {
   useEffect(() => {
     if (!id) return;
     const stored = loadPosts();
-    const merged = new Map(basePosts.map((post) => [post.id, post]));
-    stored.forEach((post) => merged.set(post.id, post));
-    const existing = merged.get(id);
+    const deleted = loadDeletedIds();
+    const merged = mergePosts(basePosts, stored, deleted);
+    const existing = merged.find((post) => post.id === id);
     if (existing) {
       setTitle(existing.title);
       setExcerpt(existing.excerpt);
-      setTags(existing.tags.join(", "));
+      setTags(Array.isArray(existing.tags) ? existing.tags.join(", ") : "");
       setCategory(existing.category);
       setAuthor(existing.author || "NeoPress Staff");
       setCoverImage(existing.image);

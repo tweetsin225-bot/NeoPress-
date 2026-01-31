@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { basePosts } from "../data/mockPosts.js";
+import { mergePosts } from "../utils/posts.js";
 import { loadDeletedIds, loadPosts } from "../utils/storage.js";
 
 const Article = () => {
@@ -8,9 +9,7 @@ const Article = () => {
   const posts = useMemo(() => {
     const stored = loadPosts();
     const deleted = loadDeletedIds();
-    const merged = new Map(basePosts.map((post) => [post.id, post]));
-    stored.forEach((post) => merged.set(post.id, post));
-    return Array.from(merged.values()).filter((post) => !deleted.includes(post.id));
+    return mergePosts(basePosts, stored, deleted);
   }, []);
   const article = posts.find((post) => post.id === id) || posts[0];
 
