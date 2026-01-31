@@ -1,27 +1,48 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { adminCredentials, getAdminSession, setAdminSession } from "../utils/auth.js";
+import { getSession, isSupabaseConfigured, onAuthStateChange, signInWithPassword } from "../utils/auth.js";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const isConfigured = isSupabaseConfigured();
 
   useEffect(() => {
-    if (getAdminSession()) {
-      navigate("/admin/dashboard");
-    }
+    let isMounted = true;
+    const checkSession = async () => {
+      const session = await getSession();
+      if (session && isMounted) {
+        navigate("/admin/dashboard");
+      }
+    };
+    checkSession();
+    const { data } = onAuthStateChange((_event, session) => {
+      if (session) {
+        navigate("/admin/dashboard");
+      }
+    });
+    return () => {
+      isMounted = false;
+      data.subscription.unsubscribe();
+    };
   }, [navigate]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (email === adminCredentials.email && password === adminCredentials.password) {
-      setAdminSession(true);
-      navigate("/admin/dashboard");
-    } else {
-      setError("Invalid credentials. Use the NeoPress admin access.");
+    if (!isConfigured) {
+      setError("Connect Supabase Auth to sign in.");
+      return;
     }
+    setLoading(true);
+    setError("");
+    const { error: authError } = await signInWithPassword(email, password);
+    if (authError) {
+      setError(authError.message);
+    }
+    setLoading(false);
   };
 
   return (
@@ -30,7 +51,7 @@ const AdminLogin = () => {
         <p className="text-xs uppercase tracking-[0.4em] text-neo-blue/70">Admin Access</p>
         <h1 className="mt-4 text-3xl font-semibold">Sign in to the CMS</h1>
         <p className="mt-2 text-sm text-slate-300">
-          Use the secure NeoPress credentials to manage posts.
+          Sign in with your Supabase Auth account to manage posts.
         </p>
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <input
@@ -50,16 +71,21 @@ const AdminLogin = () => {
           {error && <p className="text-sm text-neo-pink">{error}</p>}
           <button
             type="submit"
+            disabled={loading || !isConfigured}
             className="w-full rounded-xl bg-neo-blue px-4 py-3 text-xs uppercase tracking-[0.3em] text-neo-black"
           >
-            Enter CMS
+            {loading ? "Signing in..." : "Enter CMS"}
           </button>
         </form>
-        <div className="mt-6 rounded-2xl border border-dashed border-white/10 p-4 text-xs text-slate-400">
-          <p className="uppercase tracking-[0.3em]">Demo credentials</p>
-          <p className="mt-2">Email: {adminCredentials.email}</p>
-          <p>Password: {adminCredentials.password}</p>
-        </div>
+        {!isConfigured && (
+          <div className="mt-6 rounded-2xl border border-dashed border-white/10 p-4 text-xs text-slate-400">
+            <p className="uppercase tracking-[0.3em]">Supabase required</p>
+            <p className="mt-2">
+              Add <span className="text-white">VITE_SUPABASE_URL</span> and{" "}
+              <span className="text-white">VITE_SUPABASE_ANON_KEY</span> to your environment.
+            </p>
+          </div>
+        )}
       </div>
     </main>
   );

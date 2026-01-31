@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { basePosts } from "../data/mockPosts.js";
-import { mergePosts } from "../utils/posts.js";
+import { getVisiblePosts, mergePosts } from "../utils/posts.js";
 import { loadDeletedIds, loadPosts } from "../utils/storage.js";
 
 const Article = () => {
@@ -9,7 +9,7 @@ const Article = () => {
   const posts = useMemo(() => {
     const stored = loadPosts();
     const deleted = loadDeletedIds();
-    return mergePosts(basePosts, stored, deleted);
+    return getVisiblePosts(mergePosts(basePosts, stored, deleted));
   }, []);
   const article = posts.find((post) => post.id === id) || posts[0];
   const readTime = useMemo(() => {
@@ -38,12 +38,25 @@ const Article = () => {
         <img src={article.image} alt={article.title} className="h-72 w-full object-cover" />
         <div className="space-y-6 p-8">
           <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.3em] text-slate-400">
-            <span>{article.category}</span>
+            <Link to={`/categories/${encodeURIComponent(article.category)}`}>{article.category}</Link>
             <span>{article.date}</span>
           </div>
           <p className="text-xs uppercase tracking-[0.3em] text-neo-blue/70">{readTime}</p>
           <h1 className="text-4xl font-semibold leading-tight">{article.title}</h1>
           <p className="text-base text-slate-300">{article.excerpt}</p>
+          {article.tags?.length ? (
+            <div className="flex flex-wrap gap-2 text-xs uppercase tracking-[0.3em] text-neo-purple/70">
+              {article.tags.map((tag) => (
+                <Link
+                  key={tag}
+                  to={`/tags/${encodeURIComponent(tag)}`}
+                  className="rounded-full border border-neo-purple/40 bg-neo-purple/10 px-3 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-neo-purple"
+                >
+                  {tag}
+                </Link>
+              ))}
+            </div>
+          ) : null}
           <div className="rich-text space-y-4" dangerouslySetInnerHTML={{ __html: article.content }} />
         </div>
       </div>
