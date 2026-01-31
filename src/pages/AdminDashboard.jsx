@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { basePosts } from "../data/mockPosts.js";
+import { mergePosts } from "../utils/posts.js";
 import { getAdminSession, setAdminSession } from "../utils/auth.js";
 import { loadDeletedIds, loadPosts, saveDeletedIds, savePosts } from "../utils/storage.js";
 
@@ -9,9 +10,7 @@ const AdminDashboard = () => {
   const [posts, setPosts] = useState(() => {
     const stored = loadPosts();
     const deleted = loadDeletedIds();
-    const merged = new Map(basePosts.map((post) => [post.id, post]));
-    stored.forEach((post) => merged.set(post.id, post));
-    return Array.from(merged.values()).filter((post) => !deleted.includes(post.id));
+    return mergePosts(basePosts, stored, deleted);
   });
 
   useEffect(() => {
