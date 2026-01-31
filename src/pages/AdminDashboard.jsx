@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { basePosts } from "../data/mockPosts.js";
-import { mergePosts } from "../utils/posts.js";
-import { getAdminSession, setAdminSession } from "../utils/auth.js";
+import { getPostStatus, mergePosts } from "../utils/posts.js";
+import { getSession, isSupabaseConfigured, signOut } from "../utils/auth.js";
 import { loadDeletedIds, loadPosts, saveDeletedIds, savePosts } from "../utils/storage.js";
 
 const AdminDashboard = () => {
@@ -12,12 +12,22 @@ const AdminDashboard = () => {
     const deleted = loadDeletedIds();
     return mergePosts(basePosts, stored, deleted);
   });
+  const isConfigured = isSupabaseConfigured();
 
   useEffect(() => {
-    if (!getAdminSession()) {
-      navigate("/admin");
-    }
+    const checkSession = async () => {
+      const session = await getSession();
+      if (!session) {
+        navigate("/admin");
+      }
+    };
+    checkSession();
   }, [navigate]);
+
+  const sortedPosts = useMemo(
+    () => posts.slice().sort((a, b) => new Date(b.updatedAt || b.date) - new Date(a.updatedAt || a.date)),
+    [posts]
+  );
 
   const handleDelete = (id) => {
     const stored = loadPosts();
@@ -31,8 +41,7 @@ const AdminDashboard = () => {
   };
 
   const handleSignOut = () => {
-    setAdminSession(false);
-    navigate("/admin");
+    signOut().finally(() => navigate("/admin"));
   };
 
   return (
@@ -60,10 +69,22 @@ const AdminDashboard = () => {
       </div>
 
       <div className="mt-8 grid gap-4">
-        {posts.map((post) => (
+        {!isConfigured && (
+          <div className="glass rounded-3xl border border-dashed border-neo-purple/40 p-6 text-sm text-slate-300">
+            Supabase Auth is not configured. Add your environment keys to enable secure access.
+          </div>
+        )}
+        {sortedPosts.map((post) => {
+          const status = getPostStatus(post);
+          return (
           <div key={post.id} className="glass flex flex-col gap-4 rounded-3xl p-6 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-400">{post.category}</p>
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
+                {post.category} • {status}
+                {post.scheduledFor && status === "scheduled"
+                  ? ` • Schedules ${new Date(post.scheduledFor).toLocaleString()}`
+                  : ""}
+              </p>
               <h2 className="text-xl font-semibold">{post.title}</h2>
               <p className="text-sm text-slate-400">{post.date}</p>
             </div>
@@ -83,7 +104,7 @@ const AdminDashboard = () => {
               </button>
             </div>
           </div>
-        ))}
+        )})}
       </div>
     </main>
   );
