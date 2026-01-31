@@ -15,18 +15,6 @@ const Home = () => {
     return getVisiblePosts(mergePosts(basePosts, stored, deleted));
   }, []);
 
-  const featuredSlides = posts
-    .filter((post) => post.featured)
-    .map((post) => ({
-      id: post.id,
-      title: post.title,
-      description: post.excerpt,
-      tags: post.tags,
-      author: post.author,
-      date: post.date,
-      image: post.image,
-    }));
-  const heroSlidesSource = featuredSlides.length > 0 ? featuredSlides : heroSlides;
   const latestPosts = posts.slice(0, 4);
   const categoryGroups = groupPostsByCategory(posts).slice(0, 4);
   const trendingTags = getAllTags(posts).slice(0, 10);

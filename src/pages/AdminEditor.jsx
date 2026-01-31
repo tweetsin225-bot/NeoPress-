@@ -39,7 +39,6 @@ const AdminEditor = () => {
   const [status, setStatus] = useState("draft");
   const [scheduledFor, setScheduledFor] = useState("");
   const [content, setContent] = useState("");
-  const [featured, setFeatured] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
   const [lastSaved, setLastSaved] = useState("");
 
@@ -97,7 +96,6 @@ const AdminEditor = () => {
     setCoverImage(existingPost.image || "");
     setStatus(existingPost.status || "published");
     setScheduledFor(existingPost.scheduledFor || "");
-    setFeatured(Boolean(existingPost.featured));
     setContent(existingPost.content || "");
     if (editor && existingPost.content) {
       editor.commands.setContent(existingPost.content, false);
@@ -151,7 +149,6 @@ const AdminEditor = () => {
       content,
       status: effectiveStatus,
       scheduledFor: scheduledDate || null,
-      featured,
       updatedAt: now.toISOString(),
     };
   };
@@ -179,7 +176,6 @@ const AdminEditor = () => {
         scheduled_for: newPost.scheduledFor,
         tags: newPost.tags,
         category: newPost.category,
-        featured: newPost.featured,
         updated_at: newPost.updatedAt,
       });
     }
@@ -371,15 +367,6 @@ const AdminEditor = () => {
                 className="mt-3 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white"
               />
             )}
-            <label className="mt-4 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-slate-300">
-              <input
-                type="checkbox"
-                checked={featured}
-                onChange={(event) => setFeatured(event.target.checked)}
-                className="h-4 w-4 rounded border border-white/20 bg-white/5 text-neo-blue"
-              />
-              Feature in homepage drop
-            </label>
           </div>
           <div className="glass rounded-3xl p-6">
             <label className="text-xs uppercase tracking-[0.3em] text-slate-400">Category</label>

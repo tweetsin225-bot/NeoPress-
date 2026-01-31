@@ -76,13 +76,11 @@ const AdminDashboard = () => {
         )}
         {sortedPosts.map((post) => {
           const status = getPostStatus(post);
-          const featuredLabel = post.featured ? " • featured" : "";
           return (
           <div key={post.id} className="glass flex flex-col gap-4 rounded-3xl p-6 md:flex-row md:items-center md:justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.3em] text-slate-400">
                 {post.category} • {status}
-                {featuredLabel}
                 {post.scheduledFor && status === "scheduled"
                   ? ` • Schedules ${new Date(post.scheduledFor).toLocaleString()}`
                   : ""}

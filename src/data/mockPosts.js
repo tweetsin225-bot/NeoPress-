@@ -80,7 +80,6 @@ export const basePosts = [
     tags: ["Racing", "Indie", "Tech"],
     author: "Noah Kim",
     status: "published",
-    featured: true,
     image:
       "https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=900&q=80",
     content:
