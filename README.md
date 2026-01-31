@@ -2,7 +2,40 @@
 
 NeoPress is a cyber‑future, dark‑mode blogging platform for Anime + Gaming news, reviews, and guides. It includes a public‑facing site with a bento grid feed and a secure, custom Admin CMS for authoring and publishing posts.
 
-<a href="https://raw.githubusercontent.com/tweetsin225-bot/NeoPress-/main/docs/neopress-docs.html" target="_blank" rel="noreferrer">Open the animated NeoPress documentation</a>
+> **Learning project:** NeoPress is built for educational and experimentation purposes.
+
+## Documentation
+
+NeoPress is a futuristic anime + gaming media platform that combines a public-facing editorial experience with a custom admin CMS.
+
+### Key experience highlights
+- **Hero carousel:** Featured drops with tags, authors, and dates.
+- **Bento grid feed:** Dynamic card layout to spotlight stories.
+- **Article experience:** Read-time indicator, rich-text body, author card, and related articles.
+- **Admin CMS:** Login gate, dashboard, and a rich editor with formatting tools and media uploads.
+
+### Architecture overview
+- **Frontend:** React + Vite + Tailwind CSS.
+- **Content source:** Seed posts in `src/data/mockPosts.js` plus local posts in `localStorage`.
+- **State helpers:** Local auth and storage utilities in `src/utils`.
+- **Optional backend:** Supabase integration via `src/lib/supabaseClient.js`.
+
+## Hosting on Replit
+
+1. Create a new Replit project and import this GitHub repository.
+2. In **Shell**, install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set the run command to:
+   ```bash
+   npm run dev -- --host 0.0.0.0 --port 3000
+   ```
+4. Ensure Replit exposes port **3000** (the Vite dev server).
+5. (Optional) Add Supabase secrets in **Secrets**:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+6. Open the public Replit URL to view the site.
 
 ## Highlights
 
