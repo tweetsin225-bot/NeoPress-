@@ -26,8 +26,11 @@ const Navbar = () => {
           <NavLink to="/" className={navLinkClass}>
             Home
           </NavLink>
-          <NavLink to="/article/featured" className={navLinkClass}>
-            Reviews
+          <NavLink to="/categories" className={navLinkClass}>
+            Sections
+          </NavLink>
+          <NavLink to="/tags" className={navLinkClass}>
+            Tags
           </NavLink>
           <NavLink to="/privacy" className={navLinkClass}>
             Privacy

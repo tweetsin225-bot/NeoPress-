@@ -53,10 +53,22 @@ body {
   @apply text-base text-slate-200 leading-relaxed;
 }
 
+.rich-text ul {
+  @apply list-disc pl-6 text-base text-slate-200;
+}
+
+.rich-text ol {
+  @apply list-decimal pl-6 text-base text-slate-200;
+}
+
+.rich-text blockquote {
+  @apply border-l-2 border-neo-blue/60 pl-4 text-slate-300 italic;
+}
+
 .rich-text a {
   @apply text-neo-blue underline;
 }
 
 .rich-text img {
-  @apply rounded-xl border border-white/10;
+  @apply my-4 w-full rounded-2xl border border-white/10;
 }

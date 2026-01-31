@@ -7,6 +7,7 @@ export const heroSlides = [
     tags: ["JRPG", "Review", "PS5"],
     author: "Aiko Tanaka",
     date: "Sep 12, 2024",
+    status: "published",
     image:
       "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=900&q=80",
   },
@@ -18,6 +19,7 @@ export const heroSlides = [
     tags: ["Anime", "Shonen", "Spotlight"],
     author: "Rei Nakamura",
     date: "Sep 10, 2024",
+    status: "published",
     image:
       "https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=900&q=80",
   },
@@ -29,6 +31,7 @@ export const heroSlides = [
     tags: ["Tech", "Gear", "Guide"],
     author: "Kai Mizuno",
     date: "Sep 7, 2024",
+    status: "published",
     image:
       "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80",
   },
@@ -44,6 +47,8 @@ export const basePosts = [
     date: "Sep 9, 2024",
     tags: ["RPG", "Guide", "Co-op"],
     author: "Lia Park",
+    status: "published",
+    featured: true,
     image:
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
     content:
@@ -58,6 +63,8 @@ export const basePosts = [
     date: "Sep 5, 2024",
     tags: ["Shonen", "Review", "Finale"],
     author: "Mira Santos",
+    status: "published",
+    featured: true,
     image:
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
     content:
@@ -72,6 +79,8 @@ export const basePosts = [
     date: "Sep 2, 2024",
     tags: ["Racing", "Indie", "Tech"],
     author: "Noah Kim",
+    status: "published",
+    featured: true,
     image:
       "https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=900&q=80",
     content:
@@ -86,6 +95,7 @@ export const basePosts = [
     date: "Aug 29, 2024",
     tags: ["Mecha", "Interview", "Tech"],
     author: "Yuto Imai",
+    status: "published",
     image:
       "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80",
     content:
@@ -100,6 +110,7 @@ export const basePosts = [
     date: "Aug 22, 2024",
     tags: ["Fantasy", "Lore", "Season 2"],
     author: "Serena Cho",
+    status: "published",
     image:
       "https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&w=900&q=80",
     content:
