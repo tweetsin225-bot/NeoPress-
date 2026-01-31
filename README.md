@@ -2,6 +2,10 @@
 
 NeoPress is a cyber‑future, dark‑mode blogging platform for Anime + Gaming news, reviews, and guides. It includes a public‑facing site with a bento grid feed and a secure, custom Admin CMS for authoring and publishing posts.
 
+<p>
+  <a href="./docs/neopress-docs.html" target="_blank" rel="noreferrer">Open the animated NeoPress documentation</a>
+</p>
+
 ## Highlights
 
 - **Neo‑Tokyo visual system**: dark UI, neon purple/blue accents, glassmorphism, and bold headings.
